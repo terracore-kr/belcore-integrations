@@ -8,7 +8,7 @@ version = "0.1.0"
 description = "LangChain chat model for Belcore: long-term memory and an emotion state for chat apps"
 readme = "README.md"
 license = "Apache-2.0"
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 dependencies = ["belcore>=0.1.0", "langchain-core>=0.3"]
 keywords = ["langchain", "llm", "memory", "long-term memory", "belcore"]
 classifiers = [
