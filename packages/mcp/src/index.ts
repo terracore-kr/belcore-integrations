@@ -10,6 +10,8 @@
  */
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js"
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
+import { realpathSync } from "node:fs"
+import { fileURLToPath } from "node:url"
 import { z } from "zod"
 import { Belcore } from "@belcore/sdk"
 
@@ -51,7 +53,10 @@ export function buildServer(client: Belcore) {
   return server
 }
 
-const isMain = typeof process !== "undefined" && process.argv[1] && /mcp[\\/](dist|src)[\\/]index\.(js|ts)$/.test(process.argv[1])
+// True when this file is the program being run (also through the npx bin symlink), false when imported.
+const isMain = (() => {
+  try { return realpathSync(process.argv[1]) === fileURLToPath(import.meta.url) } catch { return false }
+})()
 if (isMain) {
   const server = buildServer(new Belcore())
   await server.connect(new StdioServerTransport())
