@@ -1,6 +1,7 @@
 {
   "name": "@belcore/mcp",
-  "version": "0.1.0",
+  "version": "0.1.1",
+  "mcpName": "io.github.terracore-kr/belcore",
   "description": "MCP server for Belcore (stdio)",
   "keywords": [
     "mcp",

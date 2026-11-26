@@ -1,0 +1,31 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.terracore-kr/belcore",
+  "description": "Long-term memory and emotion state for AI apps, through the Belcore API.",
+  "repository": {
+    "url": "https://github.com/terracore-kr/belcore-integrations",
+    "source": "github",
+    "subfolder": "packages/mcp"
+  },
+  "version": "0.1.1",
+  "websiteUrl": "https://belcore.xyz",
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "@belcore/mcp",
+      "version": "0.1.1",
+      "transport": {
+        "type": "stdio"
+      },
+      "environmentVariables": [
+        {
+          "name": "BELCORE_API_KEY",
+          "description": "Belcore API key from belcore.xyz",
+          "isRequired": true,
+          "format": "string",
+          "isSecret": true
+        }
+      ]
+    }
+  ]
+}
