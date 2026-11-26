@@ -1,0 +1,26 @@
+{
+  "name": "belcore-integrations",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/sdk",
+    "packages/ai-sdk",
+    "packages/langchain",
+    "packages/mcp"
+  ],
+  "scripts": {
+    "build": "npm run build -w packages/sdk && npm run build -w packages/ai-sdk -w packages/langchain -w packages/mcp",
+    "test": "vitest run",
+    "typecheck": "tsc -p ."
+  },
+  "devDependencies": {
+    "typescript": "^5.7.0",
+    "vitest": "^5.1.0",
+    "@types/node": "^22",
+    "ai": "^7.0.0",
+    "@ai-sdk/provider": "^4.0.0",
+    "@langchain/core": "^1.0.0",
+    "@modelcontextprotocol/sdk": "^1.32.0",
+    "zod": "^4.0.0"
+  }
+}

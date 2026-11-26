@@ -1,0 +1,49 @@
+{
+  "name": "@belcore/ai-sdk",
+  "version": "0.1.0",
+  "description": "Belcore provider for the Vercel AI SDK",
+  "keywords": [
+    "ai-sdk",
+    "vercel",
+    "provider",
+    "memory",
+    "belcore"
+  ],
+  "license": "Apache-2.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "dependencies": {
+    "@belcore/sdk": "0.1.0"
+  },
+  "peerDependencies": {
+    "@ai-sdk/provider": ">=4",
+    "ai": ">=7"
+  },
+  "peerDependenciesMeta": {
+    "ai": {
+      "optional": true
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json"
+  },
+  "homepage": "https://belcore.xyz",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/terracore-kr/belcore-integrations"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
