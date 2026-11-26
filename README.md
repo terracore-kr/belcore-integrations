@@ -18,6 +18,15 @@ npm install @belcore/sdk         # plain client
 npx -y @belcore/mcp              # MCP server
 ```
 
+## Python
+
+```bash
+pip install belcore             # plain client (sync + async)
+pip install langchain-belcore   # LangChain chat model
+```
+
+See [`python/belcore`](python/belcore) and [`python/langchain-belcore`](python/langchain-belcore).
+
 ## Example app
 
 A Next.js chat app with long-term memory, ready to copy: [`examples/nextjs-chat`](examples/nextjs-chat).

@@ -1,0 +1,32 @@
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[project]
+name = "langchain-belcore"
+version = "0.1.0"
+description = "LangChain chat model for Belcore: long-term memory and an emotion state for chat apps"
+readme = "README.md"
+license = "Apache-2.0"
+requires-python = ">=3.9"
+dependencies = ["belcore>=0.1.0", "langchain-core>=0.3"]
+keywords = ["langchain", "llm", "memory", "long-term memory", "belcore"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Intended Audience :: Developers",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+[project.urls]
+Homepage = "https://belcore.xyz/developers"
+Source = "https://github.com/terracore-kr/belcore-integrations"
+Documentation = "https://github.com/terracore-kr/belcore-integrations/tree/main/python/langchain-belcore"
+
+[project.optional-dependencies]
+test = ["pytest>=8", "pytest-asyncio>=0.23"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/langchain_belcore"]
+
+[tool.pytest.ini_options]
+asyncio_default_fixture_loop_scope = "function"

@@ -1,0 +1,74 @@
+name: Python
+on:
+  push:
+    paths: ["python/**", ".github/workflows/python.yml"]
+  pull_request:
+    paths: ["python/**"]
+  workflow_dispatch:
+    inputs:
+      publish:
+        description: "Publish to PyPI (versions already on PyPI are skipped)"
+        type: boolean
+        default: false
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ["3.9", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - run: pip install -e "python/belcore[test]" -e "python/langchain-belcore[test]"
+      - run: pytest -q python/belcore/tests python/langchain-belcore/tests
+
+  build:
+    needs: test
+    if: github.event_name == 'workflow_dispatch' && inputs.publish
+    runs-on: ubuntu-latest
+    outputs:
+      built: ${{ steps.b.outputs.built }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Build only versions not yet on PyPI
+        id: b
+        run: |
+          pip install build
+          mkdir -p dist
+          for d in belcore langchain-belcore; do
+            v=$(python -c "import tomllib;print(tomllib.load(open('python/$d/pyproject.toml','rb'))['project']['version'])")
+            if curl -sf "https://pypi.org/pypi/$d/$v/json" >/dev/null; then
+              echo "$d $v already on PyPI, skipping"
+            else
+              python -m build "python/$d" --outdir dist
+            fi
+          done
+          ls dist
+          if ls dist/* >/dev/null 2>&1; then echo "built=yes" >> "$GITHUB_OUTPUT"; fi
+      - uses: actions/upload-artifact@v4
+        if: steps.b.outputs.built == 'yes'
+        with:
+          name: dist
+          path: dist/
+
+  publish:
+    needs: build
+    if: needs.build.outputs.built == 'yes'
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+      - name: Publish (trusted publishing, no token)
+        uses: pypa/gh-action-pypi-publish@release/v1
