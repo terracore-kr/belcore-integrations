@@ -11,12 +11,12 @@ Long-term memory and emotion for your AI app, in one call. Drop Belcore into the
 
 Get an API key at [belcore.xyz](https://belcore.xyz) and set `BELCORE_API_KEY`.
 
-> **Status: v0.1 preview.** npm packages are not published yet. Until then:
->
-> ```bash
-> git clone https://github.com/terracore-kr/belcore-integrations && cd belcore-integrations
-> npm install && npm run build && npm test
-> ```
+```bash
+npm install @belcore/ai-sdk      # Vercel AI SDK
+npm install @belcore/langchain   # LangChain.js
+npm install @belcore/sdk         # plain client
+npx -y @belcore/mcp              # MCP server
+```
 
 ## How it works
 
