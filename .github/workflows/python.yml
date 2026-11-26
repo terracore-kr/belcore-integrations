@@ -26,49 +26,39 @@ jobs:
       - run: pip install -e "python/belcore[test]" -e "python/langchain-belcore[test]"
       - run: pytest -q python/belcore/tests python/langchain-belcore/tests
 
-  build:
+  publish-belcore:
     needs: test
     if: github.event_name == 'workflow_dispatch' && inputs.publish
-    runs-on: ubuntu-latest
-    outputs:
-      built: ${{ steps.b.outputs.built }}
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.13"
-      - name: Build only versions not yet on PyPI
-        id: b
-        run: |
-          pip install build
-          mkdir -p dist
-          for d in belcore langchain-belcore; do
-            v=$(python -c "import tomllib;print(tomllib.load(open('python/$d/pyproject.toml','rb'))['project']['version'])")
-            if curl -sf "https://pypi.org/pypi/$d/$v/json" >/dev/null; then
-              echo "$d $v already on PyPI, skipping"
-            else
-              python -m build "python/$d" --outdir dist
-            fi
-          done
-          ls dist
-          if ls dist/* >/dev/null 2>&1; then echo "built=yes" >> "$GITHUB_OUTPUT"; fi
-      - uses: actions/upload-artifact@v4
-        if: steps.b.outputs.built == 'yes'
-        with:
-          name: dist
-          path: dist/
-
-  publish:
-    needs: build
-    if: needs.build.outputs.built == 'yes'
     runs-on: ubuntu-latest
     environment: pypi
     permissions:
       id-token: write
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
-          name: dist
-          path: dist/
-      - name: Publish (trusted publishing, no token)
+          python-version: "3.13"
+      - id: b
+        run: |
+          v=$(python -c "import tomllib;print(tomllib.load(open('python/belcore/pyproject.toml','rb'))['project']['version'])")
+          if curl -sf "https://pypi.org/pypi/belcore/$v/json" >/dev/null; then echo "belcore $v already on PyPI"; else pip install build && python -m build python/belcore --outdir dist && echo "go=yes" >> "$GITHUB_OUTPUT"; fi
+      - if: steps.b.outputs.go == 'yes'
+        uses: pypa/gh-action-pypi-publish@release/v1
+
+  publish-langchain-belcore:
+    needs: publish-belcore
+    runs-on: ubuntu-latest
+    environment: pypi-langchain
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - id: b
+        run: |
+          v=$(python -c "import tomllib;print(tomllib.load(open('python/langchain-belcore/pyproject.toml','rb'))['project']['version'])")
+          if curl -sf "https://pypi.org/pypi/langchain-belcore/$v/json" >/dev/null; then echo "langchain-belcore $v already on PyPI"; else pip install build && python -m build python/langchain-belcore --outdir dist && echo "go=yes" >> "$GITHUB_OUTPUT"; fi
+      - if: steps.b.outputs.go == 'yes'
         uses: pypa/gh-action-pypi-publish@release/v1
