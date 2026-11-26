@@ -42,6 +42,14 @@ jobs:
         working-directory: packages/mcp
     steps:
       - uses: actions/checkout@v4
+      - name: Wait until npm serves this version
+        run: |
+          v=$(node -p "require('./package.json').version")
+          for i in $(seq 1 30); do
+            npm view "@belcore/mcp@$v" version >/dev/null 2>&1 && exit 0
+            sleep 10
+          done
+          echo "npm did not serve @belcore/mcp@$v in time"; exit 1
       - name: Install mcp-publisher
         run: |
           curl -L "https://github.com/modelcontextprotocol/registry/releases/latest/download/mcp-publisher_linux_amd64.tar.gz" | tar xz mcp-publisher
