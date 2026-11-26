@@ -18,6 +18,14 @@ npm install @belcore/sdk         # plain client
 npx -y @belcore/mcp              # MCP server
 ```
 
+## Example app
+
+A Next.js chat app with long-term memory, ready to copy: [`examples/nextjs-chat`](examples/nextjs-chat).
+
+```bash
+npx degit terracore-kr/belcore-integrations/examples/nextjs-chat my-chat
+```
+
 ## How it works
 
 You keep the conversation history in **your** database and send it with each call. Belcore picks the context that matters from the whole history, answers, and returns the updated emotion state for you to save. Belcore does not store conversation text.
