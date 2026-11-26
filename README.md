@@ -9,7 +9,7 @@ Long-term memory and emotion for your AI app, in one call. Drop Belcore into the
 | `@belcore/langchain` | LangChain.js |
 | `@belcore/mcp` | Any MCP client (Claude Desktop, Cursor, …) |
 
-Get an API key at [belcore.xyz](https://belcore.xyz) and set `BELCORE_API_KEY`.
+Get an API key at [belcore.xyz/developers/signup](https://belcore.xyz/developers/signup) (5,000 free calls, no card) and set `BELCORE_API_KEY`.
 
 ```bash
 npm install @belcore/ai-sdk      # Vercel AI SDK

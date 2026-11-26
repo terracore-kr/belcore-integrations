@@ -1,6 +1,6 @@
 {
   "name": "@belcore/ai-sdk",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "Belcore provider for the Vercel AI SDK",
   "keywords": [
     "ai-sdk",
@@ -20,7 +20,7 @@
     }
   },
   "dependencies": {
-    "@belcore/sdk": "0.1.0"
+    "@belcore/sdk": "^0.1.0"
   },
   "peerDependencies": {
     "@ai-sdk/provider": ">=4",
@@ -38,7 +38,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.build.json"
   },
-  "homepage": "https://belcore.xyz",
+  "homepage": "https://belcore.xyz/developers",
   "repository": {
     "type": "git",
     "url": "https://github.com/terracore-kr/belcore-integrations"

@@ -1,6 +1,6 @@
 {
   "name": "@belcore/sdk",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "Client for the Belcore memory + emotion engine API",
   "keywords": [
     "ai",
@@ -26,7 +26,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.build.json"
   },
-  "homepage": "https://belcore.xyz",
+  "homepage": "https://belcore.xyz/developers",
   "repository": {
     "type": "git",
     "url": "https://github.com/terracore-kr/belcore-integrations"

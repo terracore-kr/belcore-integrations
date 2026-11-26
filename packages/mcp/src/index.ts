@@ -16,7 +16,7 @@ import { z } from "zod"
 import { Belcore } from "@belcore/sdk"
 
 export function buildServer(client: Belcore) {
-  const server = new McpServer({ name: "belcore", version: "0.1.1" })
+  const server = new McpServer({ name: "belcore", version: "0.1.2" })
   const emotion = z.object({ longing: z.number(), sulkiness: z.number(), emotionUpdatedAt: z.number() }).partial()
   server.registerTool(
     "belcore_chat",
